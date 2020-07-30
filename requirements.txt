@@ -10,7 +10,7 @@ chromedriver-binary==81.0.4044.69.0
 colorama==0.4.3
 discord.py==1.3.4
 gspread==3.3.0
-httplib2==0.17.0
+httplib2==0.18.0
 idna==2.9
 isort==4.3.21
 lazy-object-proxy==1.4.3
