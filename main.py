@@ -7,6 +7,8 @@ import threading
 import datetime
 import asyncio
 import fibonatti
+import os
+import subprocess
 
 
 
