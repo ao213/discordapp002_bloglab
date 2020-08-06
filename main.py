@@ -49,7 +49,6 @@ async def on_message(message):
     messagech = message.channel
     messageguil = message.guild
     BANchID = '633845736655814685' #BAN用チャンネルID
-    attachment = message.attachments[0]
 
     if message.author.bot:
         return 
