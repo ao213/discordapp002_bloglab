@@ -28,7 +28,7 @@ member = [] ##メンバーリスト
 notoinmess = 'CODMから逃げるな' ##メッセージ
 times = [1,60,3600,86400]
 #トークン設定#
-bot_token = ('DISCORD_BOT_TOKEN')
+bot_token = os.environ['DISCORD_BOT_TOKEN']
 embed1 = discord.Embed(title="予定表の提出", description="予定を教えてください。", color=0xff7b7b)
 
 @client.event
