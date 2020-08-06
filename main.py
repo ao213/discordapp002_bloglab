@@ -102,7 +102,7 @@ async def on_message(message):
                 Now_time2 = Now_time1
                 Now_time1 = datetime.datetime.today()
                 await get_channel.send(f'このメッセージは{time_interval}分間続きます、{i}分間経過')
-                await get_channel.send(embed=embed2)
+                await get_channel.send('!d bump')
             await asyncio.sleep(times[1])
     if messagecont.startswith(prefix + 'memcount'): ##にんずうかぞえてくれるけいだんじｄddddフェjふぃえあ音階ふぁんせあの得あvmあぁ⒡目亜lmふぇいあ⒡時あ⒡なフェア⒡場hfbhbヴぁ；枝折を：pfかpr化：フェ
         count_mem = message.guild.member_count
