@@ -9,7 +9,9 @@ import asyncio
 import fibonatti
 import os
 import subprocess
-
+import schedule
+from discord.ext import tasks
+from datetime import datetime 
 
 
 ##関数領域##
@@ -31,7 +33,20 @@ notoinmess = 'CODMから逃げるな' ##メッセージ
 times = [1,60,3600,86400]
 #トークン設定#
 bot_token = os.environ['DISCORD_BOT_TOKEN']
+#embed設定#
 embed1 = discord.Embed(title="予定表の提出", description="予定を教えてください。", color=0xff7b7b)
+#チャンネルID設定#
+
+#ループタスク#
+@tasks.loop(seconds=30)
+async def loop():
+    channel_001 = client.get_channel(681139581558456455)
+    now = datetime.now().strftime('%A:%H:%M')
+    print(now)
+    if now == 'Monday:23:14':
+        await channel_001.send(embed=embed_3)
+        await asyncio.sleep(30)
+
 
 @client.event
 async def on_ready():
@@ -106,6 +121,17 @@ async def on_message(message):
     if messagecont.startswith(prefix + 'memcount'): ##にんずうかぞえてくれるけいだんじｄddddフェjふぃえあ音階ふぁんせあの得あvmあぁ⒡目亜lmふぇいあ⒡時あ⒡なフェア⒡場hfbhbヴぁ；枝折を：pfかpr化：フェ
         count_mem = message.guild.member_count
         await messagech.send(f'{count_mem}人が参加してます')
+    if messagecont.startswith(prefix + 'テーマ'):
+        strs = messagecont[5:]
+        global embed_3
+        themes = theme_get(strs)
+        embed_3 = discord.Embed(title="【お知らせ】", description="お題ブログを開催します！\n\n期間：x日からｙ日\n提出先：企画シェア\nほかの人の記事へのレビューは、ブログの感想へお願いします。\n\n **お題**", color=0x22bcbf)
+        for s in range(0,len(themes)):
+            embed_3.add_field(name=s + 1, value=themes[s], inline=True)
+        embed_3.set_footer(text="上記のお題の中から最低１つの内容で記事を１つ完成させてください。")
+        await messagech.send('以下のように表示されます。')
+        await messagech.send(embed=embed_3)
+        loop.start()
 
 
 client.run(bot_token)
