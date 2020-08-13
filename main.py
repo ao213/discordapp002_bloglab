@@ -143,7 +143,7 @@ async def on_message(message):
     if messagecont.startswith(prefix + 'テーマ'):
         strs = messagecont[5:]
         global embed_3
-   evetime = weekperiod()
+        evetime = weekperiod()
         global embed_3
         themes = theme_get(strs)
         embed_3 = discord.Embed(title="【お知らせ】", description=f"お題ブログを開催します！\n\n期間：{evetime[0]}日から{evetime[1]}日\n提出先：企画シェア\nほかの人の記事へのレビューは、ブログの感想へお願いします。\n\n **お題**", color=0x22bcbf)
