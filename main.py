@@ -60,7 +60,7 @@ embed1 = discord.Embed(title="予定表の提出", description="予定を教え�
 @tasks.loop(seconds=30)
 async def loop():
     channel_001 = client.get_channel(730484509425926225)
-    now = datetime.now().strftime('%A:%H:%M')
+    now = datetime.datetime.now().strftime('%A:%H:%M')
     print(now)
     if now == 'Monday:00:00':
         await channel_001.send(embed=embed_3)
