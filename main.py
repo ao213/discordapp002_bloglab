@@ -9,7 +9,6 @@ import asyncio
 import fibonatti
 import os
 import subprocess
-import schedule
 from discord.ext import tasks
 
 
