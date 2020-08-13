@@ -11,7 +11,6 @@ import os
 import subprocess
 import schedule
 from discord.ext import tasks
-from datetime import datetime 
 
 
 ##関数領域##
@@ -22,6 +21,27 @@ def game1(x): #数当て用関数　エラーは値が入ってないエラー�
     if(game1_rand != x):
         game1_hit = False
     return game1_hit
+def theme_get(x): ##テーマを決定するための関数、囲い文字削除と区切りで配列に分ける
+    strs = x
+    strs = strs.strip('('')')
+    themes = strs.split(',')
+    return themes
+
+def job_1():#スケジュール用関数
+    print('test')
+    
+
+def weekperiod():#お題ブログのイベント期間
+    aDate = datetime.datetime.today()
+    weekday = aDate.weekday()#今日は何曜日？( 月曜日 = 0, 日曜日 = 6 )
+    arToWednesday=[0,6,5,4,3,2,1]#次の水曜日までの日数を配列にしておく。先頭が月曜日からの日数を示す
+    shiftNum = arToWednesday[weekday]#今日からの日数は？
+    delta = datetime.timedelta(days=shiftNum)
+    nextDate = aDate + delta
+    lastdelta = datetime.timedelta(days=shiftNum + 6)
+    lastDate = aDate + lastdelta
+    arraypri =[nextDate.strftime('%Y.%m.%d'),lastDate.strftime('%Y.%m.%d')]
+    return arraypri
 
 
 ##クラス定義領域##
@@ -35,17 +55,16 @@ times = [1,60,3600,86400]
 bot_token = os.environ['DISCORD_BOT_TOKEN']
 #embed設定#
 embed1 = discord.Embed(title="予定表の提出", description="予定を教えてください。", color=0xff7b7b)
-#チャンネルID設定#
 
 #ループタスク#
 @tasks.loop(seconds=30)
 async def loop():
-    channel_001 = client.get_channel(681139581558456455)
+    channel_001 = client.get_channel(730484509425926225)
     now = datetime.now().strftime('%A:%H:%M')
     print(now)
-    if now == 'Monday:23:14':
+    if now == 'Monday:00:00':
         await channel_001.send(embed=embed_3)
-        await asyncio.sleep(30)
+        await asyncio.sleep(60)
 
 
 @client.event
@@ -124,8 +143,10 @@ async def on_message(message):
     if messagecont.startswith(prefix + 'テーマ'):
         strs = messagecont[5:]
         global embed_3
+   evetime = weekperiod()
+        global embed_3
         themes = theme_get(strs)
-        embed_3 = discord.Embed(title="【お知らせ】", description="お題ブログを開催します！\n\n期間：x日からｙ日\n提出先：企画シェア\nほかの人の記事へのレビューは、ブログの感想へお願いします。\n\n **お題**", color=0x22bcbf)
+        embed_3 = discord.Embed(title="【お知らせ】", description=f"お題ブログを開催します！\n\n期間：{evetime[0]}日から{evetime[1]}日\n提出先：企画シェア\nほかの人の記事へのレビューは、ブログの感想へお願いします。\n\n **お題**", color=0x22bcbf)
         for s in range(0,len(themes)):
             embed_3.add_field(name=s + 1, value=themes[s], inline=True)
         embed_3.set_footer(text="上記のお題の中から最低１つの内容で記事を１つ完成させてください。")
